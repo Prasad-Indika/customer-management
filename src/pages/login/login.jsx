@@ -34,7 +34,7 @@ export default function AppLogin() {
                 <CardMedia
                     component="img"
                     alt="Sample Image"
-                    height="450"
+                    height="500"
                     image={img}
                 />
 

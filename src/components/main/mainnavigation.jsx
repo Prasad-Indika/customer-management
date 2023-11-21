@@ -21,6 +21,9 @@ import MailIcon from '@mui/icons-material/Mail';
 import AppButton from '../../common/button/button';
 import AppLogin from '../../pages/login/login';
 
+import navLinks from '../../common/navigations/routes';
+import { Route, Routes,Navigate, Link } from 'react-router-dom';
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -130,7 +133,7 @@ export default function MainNavigations() {
                 Customer Managemet System
           </Typography>
 
-          <AppButton clickEvent={()=>{logOut()}} clr={'red'}  name='Logout'/>
+          <AppButton clickEvent={()=>{logOut()}} clr={'red'}  name='Logout' radius={6}/>
           
         </Toolbar>
       </AppBar>
@@ -141,43 +144,48 @@ export default function MainNavigations() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
-
+      
+        
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
-          ))}
+        {navLinks.map((obj, index) => (
+                        <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                            <Link to={obj.path} style={{textDecoration:'none'}}>
+                                <ListItemButton
+                                    sx={{
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        px: 2.5,
+                                    }}
+                                >
+
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: open ? 3 : 'auto',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {obj.icon}
+                                    </ListItemIcon>
+                                    <ListItemText primary={obj.name} sx={{ opacity: open ? 1 : 0 }} />
+                                </ListItemButton>
+                            </Link>
+                        </ListItem>
+                    ))}
         </List>
+
         <Divider />
-
-
 
        
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         
-       
+          <Routes>
+              <Route path={"*"} element={<Navigate to={'/customerview'}/>}/>
+              {navLinks.map((val,index)=> <Route key={index} path={val.path} element={val.component} /> )}
+          </Routes>
 
 
 
