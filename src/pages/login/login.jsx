@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import AppButton from '../../common/button/button';
 
 import img from '../../assets/cusmng.jpg';
+import { Link } from 'react-router-dom';
 
 export default function AppLogin() {
     
@@ -18,7 +19,9 @@ export default function AppLogin() {
     const [pword,setPword] = useState('')
   
     function loginHandle(){
-      
+        
+        localStorage.setItem('login',true);
+        window.location.reload();
     }
       
     return (
@@ -79,12 +82,12 @@ export default function AppLogin() {
                         
                     </CardContent>
                     <CardActions sx={{display:'flex',justifyContent:'center'}}>
-                        <AppButton clr={'rgb(65,67,229)'} name='Login' width={365}/>
+                        <AppButton clickEvent={()=>{loginHandle()}} clr={'rgb(65,67,229)'} name='Login' width={365}/>
                     </CardActions>
                     <hr/>
                     <Box sx={{display:'flex', justifyContent:'end',marginTop:3}}>
                     <Typography variant="subtitle1" gutterBottom>
-                         Create New Account ? SignUp  
+                         Create New Account ? <Link to={"/register"}>SignUp</Link>  
                     </Typography>
                     </Box>
                    
