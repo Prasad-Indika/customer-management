@@ -133,7 +133,7 @@ export default function MainNavigations() {
                 Customer Managemet System
           </Typography>
           <Box sx={{marginLeft:10}}>
-            <AppButton clickEvent={()=>{logOut()}} clr={'red'}  name='Logout' radius={6}/>
+            <AppButton clickEvent={()=>{logOut()}} clr={'#3D0C11'}  name='Logout' radius={6}/>
           </Box>
           
           

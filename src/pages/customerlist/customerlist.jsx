@@ -11,6 +11,7 @@ import axios from 'axios';
 import SaveCustomer from '../../components/savecustomer/savecustomer';
 
 import Swal from "sweetalert2"
+import ViewAddress from '../../components/viewaddress/viewaddress';
 
 
 const columns = [
@@ -28,18 +29,18 @@ const columns = [
       label: 'Contact',
       minWidth: 100 
     },
-
-    {
-      id: 'address',
-      label: 'Address',
-      minWidth: 170,
-      align: 'center',
-      
-    },
     
     {
       id: 'salary',
       label: 'Salary',
+      minWidth: 170,
+      align: 'center',
+      
+    },
+
+    {
+      id: 'address',
+      label: 'Address',
       minWidth: 170,
       align: 'center',
       
@@ -133,9 +134,6 @@ function deleteCustomer(id){
  
 }
 
-
-
-
 export default function CustomerList() {
     
     const [customerRaws,setRaws] = useState([])
@@ -157,7 +155,7 @@ export default function CustomerList() {
                       id:val.id,
                       name:val.name,
                       contact:val.contact,
-                      address:'address',
+                      address:<><ViewAddress/></>,
                       salary:val.salary,
                       profilePic:<><Avatar src={val.image} /></>,
                       action:

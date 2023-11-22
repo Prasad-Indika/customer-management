@@ -32,13 +32,13 @@ export default function CustomerTable({columns,rows}) {
       <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
+            <TableHead >
+              <TableRow >
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{ minWidth: column.minWidth,backgroundColor:'#B0A695' }}
                   >
                     {column.label}
                   </TableCell>

@@ -5,6 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import { Box, Button } from '@mui/material'
 import { useState , useEffect} from 'react';
 import axios from 'axios';
+import ViewAddress from '../../components/viewaddress/viewaddress';
 
 
 const columns = [
@@ -22,18 +23,18 @@ const columns = [
     label: 'Contact',
     minWidth: 100 
   },
-
-  {
-    id: 'address',
-    label: 'Address',
-    minWidth: 170,
-    align: 'center',
-    
-  },
   
   {
     id: 'salary',
     label: 'Salary',
+    minWidth: 170,
+    align: 'center',
+    
+  },
+
+  {
+    id: 'address',
+    label: 'Address',
     minWidth: 170,
     align: 'center',
     
@@ -74,7 +75,7 @@ export default function CustomerView() {
                     id:val.id,
                     name:val.name,
                     contact:val.contact,
-                    address:'address',
+                    address:<><ViewAddress/></>,
                     salary:val.salary,
                     profilePic:<><Avatar src={val.image} /></>,
                     
@@ -98,12 +99,15 @@ export default function CustomerView() {
   return (
     <div>
        <Box sx={{display:'flex', justifyContent:'end'}}>
+            
             <SaveCustomer  />
        </Box>
-       <CustomerTable columns={columns} rows={customerRaws}/>
 
-        
-        
+       <Box sx={{marginTop:2}}>
+          <CustomerTable columns={columns} rows={customerRaws}/>
+       </Box>
+       
+    
     </div>
   )
 }

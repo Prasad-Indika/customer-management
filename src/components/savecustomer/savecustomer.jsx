@@ -15,6 +15,7 @@ import UpgradeIcon from '@mui/icons-material/Upgrade';
 import AppButton from '../../common/button/button';
 
 import axios from 'axios';
+import Toast from '../../common/alert/alert';
 
 
 
@@ -50,6 +51,58 @@ export default function SaveCustomer({action='add', obj = {
 
     function addCustomer(){
 
+      if (name.length===0){
+        
+        Toast.fire({
+            icon: 'error',
+            title: 'Name cant be empty'
+          });
+        
+        return
+      }
+
+      var num = /^[0-9]+$/;
+
+      if(contact.length===0){
+
+        Toast.fire({
+            icon: 'error',
+            title: 'Contact no cant be empty'
+          });
+        
+        return
+      }else{
+        if(!contact.match(num)){
+       
+            Toast.fire({
+                icon: 'error',
+                title: 'Contact no Invalid Format'
+              });
+            return
+
+        }
+      }
+
+      if(salary.length===0){
+
+        Toast.fire({
+            icon: 'error',
+            title: 'Salary cant be empty'
+          });
+        
+        return
+      }else{
+        if(!salary.match(num)){
+       
+            Toast.fire({
+                icon: 'error',
+                title: 'Salary  Invalid Format'
+              });
+            return
+
+        }
+      }
+
         //console.log('add');
         const data = {
           name:name,
@@ -68,7 +121,60 @@ export default function SaveCustomer({action='add', obj = {
     }
 
     function updateCustomer(){
-        console.log('update');
+      
+      if (name.length===0){
+        
+        Toast.fire({
+            icon: 'error',
+            title: 'Name cant be empty'
+          });
+        
+        return
+      }
+
+      var num = /^[0-9]+$/;
+
+      if(contact.length===0){
+
+        Toast.fire({
+            icon: 'error',
+            title: 'Contact no cant be empty'
+          });
+        
+        return
+      }else{
+        if(!contact.match(num)){
+       
+            Toast.fire({
+                icon: 'error',
+                title: 'Contact no Invalid Format'
+              });
+            return
+
+        }
+      }
+
+      if(salary.length===0){
+
+        Toast.fire({
+            icon: 'error',
+            title: 'Salary cant be empty'
+          });
+        
+        return
+      }else{
+        if(!salary.match(num)){
+       
+            Toast.fire({
+                icon: 'error',
+                title: 'Salary  Invalid Format'
+              });
+            return
+
+        }
+      }
+
+
         const data = {
           name:name,
           contact:contact,
@@ -164,7 +270,7 @@ export default function SaveCustomer({action='add', obj = {
           </DialogContent>
 
           <DialogActions sx={{display:'flex' , justifyContent:'center'}}>
-            {action === 'update' ? <><AppButton width={200} name='Update' clickEvent={()=>{getaddress()}}/></> : <><AppButton width={200} name='Add' clickEvent={()=>{addCustomer()}} /></>}
+            {action === 'update' ? <><AppButton width={200} name='Update' clickEvent={()=>{updateCustomer()}}/></> : <><AppButton width={200} name='Add' clickEvent={()=>{addCustomer()}} /></>}
           </DialogActions>
 
         </Dialog>
