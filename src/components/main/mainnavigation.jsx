@@ -132,8 +132,10 @@ export default function MainNavigations() {
           <Typography variant="h6" noWrap component="div">
                 Customer Managemet System
           </Typography>
-
-          <AppButton clickEvent={()=>{logOut()}} clr={'red'}  name='Logout' radius={6}/>
+          <Box sx={{marginLeft:10}}>
+            <AppButton clickEvent={()=>{logOut()}} clr={'red'}  name='Logout' radius={6}/>
+          </Box>
+          
           
         </Toolbar>
       </AppBar>
