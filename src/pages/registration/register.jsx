@@ -9,14 +9,52 @@ import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import AppButton from '../../common/button/button';
 import { Link } from 'react-router-dom';
+import Toast from '../../common/alert/alert';
 
 export default function Register() {
 
-    const [name,setName] = useState()
-    const [email,setEmail] = useState()
-    const [pword,setPword] = useState()
-    const [confirmPword,setConfirmPword] = useState()
+    const [name,setName] = useState('')
+    const [email,setEmail] = useState('')
+    const [pword,setPword] = useState('')
+    const [confirmPword,setConfirmPword] = useState('')
 
+    function registerHandling(){
+        
+        if (name.length===0){
+                Toast.fire({
+                icon: 'error',
+                title: 'Please Enter the Name'
+              });
+            return
+          }
+        
+
+        if (email.length===0){
+            Toast.fire({
+            icon: 'error',
+            title: 'Please Enter the Email'
+          });
+         return
+        }
+
+        if (pword.length===0){
+            Toast.fire({
+            icon: 'error',
+            title: 'Please Enter the Password'
+          });
+         return
+        }
+
+        if (confirmPword.length===0){
+            Toast.fire({
+            icon: 'error',
+            title: 'Please Re-Enter the Password'
+          });
+         return
+        }
+
+        
+    }
 
 
   return (
@@ -83,7 +121,7 @@ export default function Register() {
                 </CardContent>
 
                 <CardActions sx={{display:'flex',justifyContent:'center'}}>
-                    <AppButton clr={'rgb(65,67,229)'} name='Register' width={370}/>
+                    <AppButton clickEvent={()=>{registerHandling()}} clr={'rgb(65,67,229)'} name='Register' width={370}/>
                 </CardActions>
                 <hr/>
                 

@@ -62,10 +62,7 @@ export default function CustomerView() {
 
     axios.get('http://127.0.0.1:8000/api/customer')
             .then(    function (response) { 
-              
-                
-              console.log(response.data.customer);
-
+ 
               const customersData = response.data.customer;
               const array = [];
               customersData.forEach((val)=>{
@@ -75,7 +72,7 @@ export default function CustomerView() {
                     id:val.id,
                     name:val.name,
                     contact:val.contact,
-                    address:<><ViewAddress/></>,
+                    address:<><ViewAddress id={val.id}/></>,
                     salary:val.salary,
                     profilePic:<><Avatar src={val.image} /></>,
                     
@@ -99,8 +96,7 @@ export default function CustomerView() {
   return (
     <div>
        <Box sx={{display:'flex', justifyContent:'end'}}>
-            
-            <SaveCustomer  />
+            <SaveCustomer loadCustomers={()=>{loadCustomers()}} />
        </Box>
 
        <Box sx={{marginTop:2}}>

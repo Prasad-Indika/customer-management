@@ -12,6 +12,7 @@ import SaveCustomer from '../../components/savecustomer/savecustomer';
 
 import Swal from "sweetalert2"
 import ViewAddress from '../../components/viewaddress/viewaddress';
+import AddAddress from '../../components/addaddress/addaddress';
 
 
 const columns = [
@@ -103,37 +104,6 @@ const dummyCustomersArray = [
     }
 ]
 
-
-function deleteCustomer(id){
-
-
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.isConfirmed) {
-
-      axios.delete(`http://127.0.0.1:8000/api/customer/${id}`)
-            .then(    function (response) { console.log(response);  } )
-            .catch(   function (error)  {   console.log(error);     } );
-
-    }
-  })
-
-
-
-
-
-
-
- 
-}
-
 export default function CustomerList() {
     
     const [customerRaws,setRaws] = useState([])
@@ -143,9 +113,6 @@ export default function CustomerList() {
       axios.get('http://127.0.0.1:8000/api/customer')
               .then(    function (response) { 
                 
-                  
-                console.log(response.data.customer);
-  
                 const customersData = response.data.customer;
                 const array = [];
                 customersData.forEach((val)=>{
@@ -155,13 +122,19 @@ export default function CustomerList() {
                       id:val.id,
                       name:val.name,
                       contact:val.contact,
-                      address:<><ViewAddress/></>,
+                      address:
+                      <>
+                          <Box sx={{display:'flex' , justifyContent:'center'}}>
+                              <ViewAddress id={val.id}/>
+                              <AddAddress loadCus={()=>{loadCustomers();}} id={val.id}/>
+                          </Box>
+                     </>,
                       salary:val.salary,
                       profilePic:<><Avatar src={val.image} /></>,
                       action:
                       <>
                           <Box sx={{display:'flex' , justifyContent:'center'}}>
-                              <SaveCustomer action='update' obj={val}/>
+                              <SaveCustomer loadCustomers={()=>{loadCustomers();}} action='update' obj={val}/>
                               <IconButton onClick={()=>{deleteCustomer(val.id)}} aria-label="delete"> <DeleteIcon/>  </IconButton>
                           </Box>
                           
@@ -177,9 +150,37 @@ export default function CustomerList() {
               .catch(   function (error)  {   console.log(error);     } )
               .finally( function () {  } );
     }
+
+    function deleteCustomer(id){
+
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+    
+          axios.delete(`http://127.0.0.1:8000/api/customer/${id}`)
+                .then(    function (response) { 
+                  loadCustomers();
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Customer Ddelet Sucessful..'
+                  });  
+                } )
+                .catch(   function (error)  {   console.log(error);     } );
+    
+        }
+      })
+    
+    }
     
     useEffect(() => {
-       //setRaws(dummyCustomersArray);
        loadCustomers()
     }, []);
 

@@ -11,6 +11,7 @@ import AppButton from '../../common/button/button';
 
 import img from '../../assets/cusmng.jpg';
 import { Link } from 'react-router-dom';
+import Toast from '../../common/alert/alert';
 
 export default function AppLogin() {
     
@@ -19,6 +20,26 @@ export default function AppLogin() {
     const [pword,setPword] = useState('')
   
     function loginHandle(){
+
+        if (username.length===0){
+        
+            Toast.fire({
+                icon: 'error',
+                title: 'Please Enter the Username'
+              });
+            
+            return
+          }
+
+        if (pword.length===0){
+        
+            Toast.fire({
+                icon: 'error',
+                title: 'Please Enter the Password'
+              });
+            
+            return
+        }
         
         localStorage.setItem('login',true);
         window.location.reload();

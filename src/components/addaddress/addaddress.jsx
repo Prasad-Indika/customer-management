@@ -1,4 +1,3 @@
-
 import React, { useState ,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -11,32 +10,38 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import Toast from '../../common/alert/alert';
 
 import axios from 'axios';
 
-export default function ViewAddress({id}) {
+export default function AddAddress({id,loadCus}) {
 
     const [open, setOpen] = useState(false);
-    const [adresses,setAddress] = useState([]);
+    const [address,setAddress] = useState();
 
-    function getAddresses(){
-      axios.get('http://127.0.0.1:8000/api/customer/address/'+id)
-      .then(    function (response) { 
-          setAddress(response.data.addresses);        
-       } )
-      .catch(   function (error)  {   console.log(error);     } );
-     
+    function AddNewAddress(){
+
+        const data = {
+            address : address,
+        }
+        console.log(id)
+        axios.post(`http://127.0.0.1:8000/api/address/${id}` , data)   
+            .then(    function (response) { 
+                loadCus();
+                setOpen(false);
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Address Saved'
+                });               
+            
+              } )
+            .catch(   function (error)  {   console.log(error);     } );
+
     }
-
-    useEffect(() => {
-      getAddresses();
-    }, []);
-
 
   return (
     <div>
-
-         <Button variant="outlined" onClick={()=>{setOpen(true)}}>View</Button>
+        <Button variant="outlined" onClick={()=>{setOpen(true)}}>Add</Button>
          <Dialog
           
           open={open}
@@ -46,18 +51,24 @@ export default function ViewAddress({id}) {
         >
 
           <DialogTitle textAlign={'center'} id="alert-dialog-title">
-                Addresses
+                Add New Addresses
           </DialogTitle>
 
           <DialogContent>
              
               <Box>
-                  {adresses.map((val,index)=> 
-                  <>
-                    <Typography variant="h6" gutterBottom>
-                      {'Address  ' + (index+1) + ' : ' + val.address}
-                    </Typography>                    
-                  </> )}
+
+                    <TextField
+                        margin='normal'
+                        fullWidth
+                        id="filled-basic"
+                        label="Address"
+                        variant="filled"
+                        value={address}
+                        onChange={(val)=>{setAddress(val.target.value)}}
+                  /> 
+                 
+                  <Button onClick={()=>{AddNewAddress()}} variant="outlined">Add</Button>
                   <Button onClick={()=>{setOpen(false)}} variant="outlined">Cancel</Button>                
               </Box>
 
@@ -68,6 +79,7 @@ export default function ViewAddress({id}) {
           </DialogActions>
 
         </Dialog>
+
     </div>
   )
 }

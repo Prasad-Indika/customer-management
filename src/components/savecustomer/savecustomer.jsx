@@ -17,11 +17,7 @@ import AppButton from '../../common/button/button';
 import axios from 'axios';
 import Toast from '../../common/alert/alert';
 
-
-
-
-
-export default function SaveCustomer({action='add', obj = {
+export default function SaveCustomer({action='add',loadCustomers, obj = {
           name:'',
           contact:'',
           address:'',
@@ -29,40 +25,37 @@ export default function SaveCustomer({action='add', obj = {
 
 }}) {
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-    const [name,setName] = useState(obj.name);
-    const [contact,setContact] = useState(obj.contact);
-    const [address,setAddress] = useState(obj.address);
-    const [salary,setSalary] = useState(obj.salary);
+  const [name,setName] = useState(obj.name);
+  const [contact,setContact] = useState(obj.contact);
+  const [address,setAddress] = useState(obj.address);
+  const [salary,setSalary] = useState(obj.salary);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    let content = null;
-    if(action==='update'){
-        content = <>
-            <IconButton onClick={()=>{setOpen(true)}} aria-label="delete"> 
-                <UpgradeIcon />
-            </IconButton>
-        </>
-    }else{
+  let content = null;
+  if(action==='update'){
+      content = <>
+          <IconButton onClick={()=>{setOpen(true)}} aria-label="delete"> 
+              <UpgradeIcon />
+          </IconButton>
+       </>
+  }else{
       content = <><AppButton clickEvent={()=>{setOpen(true)}} name='Add Customer'/></>
-    }
+   }
 
-    function addCustomer(){
+  function addCustomer(){
 
       if (name.length===0){
-        
-        Toast.fire({
+           Toast.fire({
             icon: 'error',
             title: 'Name cant be empty'
           });
-        
         return
       }
 
       var num = /^[0-9]+$/;
-
       if(contact.length===0){
 
         Toast.fire({
@@ -99,68 +92,59 @@ export default function SaveCustomer({action='add', obj = {
                 title: 'Salary  Invalid Format'
               });
             return
-
         }
       }
 
-        //console.log('add');
-        const data = {
+          const data = {
           name:name,
           contact:contact,
           salary: salary
         }
         axios.post('http://127.0.0.1:8000/api/customer' ,data)   
             .then(    function (response) { 
-
-                setTimeout(()=>{
-                    navigate('/customerview');
-                },2000);  
+                loadCustomers();
+                setOpen(false);
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Customer Saved Successful..'
+                });               
             
               } )
             .catch(   function (error)  {   console.log(error);     } );
-    }
+  }
 
-    function updateCustomer(){
+  function updateCustomer(){
       
       if (name.length===0){
-        
         Toast.fire({
             icon: 'error',
             title: 'Name cant be empty'
           });
-        
         return
       }
 
       var num = /^[0-9]+$/;
-
       if(contact.length===0){
-
         Toast.fire({
             icon: 'error',
             title: 'Contact no cant be empty'
           });
-        
-        return
+       return
       }else{
         if(!contact.match(num)){
-       
             Toast.fire({
                 icon: 'error',
                 title: 'Contact no Invalid Format'
               });
             return
-
-        }
+          }
       }
 
       if(salary.length===0){
-
         Toast.fire({
             icon: 'error',
             title: 'Salary cant be empty'
           });
-        
         return
       }else{
         if(!salary.match(num)){
@@ -170,46 +154,32 @@ export default function SaveCustomer({action='add', obj = {
                 title: 'Salary  Invalid Format'
               });
             return
-
         }
       }
-
-
-        const data = {
-          name:name,
-          contact:contact,
-          salary: salary
+         const data = {
+            name:name,
+            contact:contact,
+            salary: salary
         }
-
-        axios.put(`http://127.0.0.1:8000/api/customer/${obj.id}` ,data)   
-            .then(    function (response) { 
-
-                setOpen(false)
-                setTimeout(()=>{
-                    navigate('/customerlist');
-                },2000);  
+      axios.put(`http://127.0.0.1:8000/api/customer/${obj.id}` ,data)   
+         .then(    function (response) { 
             
-              } )
-            .catch(   function (error)  {   console.log(error);     } );
+            loadCustomers();
+            setTimeout(()=>{
+                navigate('/customerlist');
+            },1500);  
+            setOpen(false)
 
-
-    }
-
-    function getaddress(){
-      console.log(obj);
-    }
+          } )
+         .catch(   function (error)  {   console.log(error);     } );
+  }
 
   return (
     <>
-  
-
     <div>
-
-        {/* <AppButton clickEvent={()=>{setOpen(true)}} name='Add Customer'/> */}
         {content}
-        
         <Dialog
-          
+      
           open={open}
           onClose={()=>{setOpen(false);}}
           aria-labelledby="alert-dialog-title"
@@ -243,17 +213,7 @@ export default function SaveCustomer({action='add', obj = {
                       value={contact}
                       onChange={(val)=>{setContact(val.target.value)}}
                   />
-
-                  <TextField
-                      margin='normal'
-                      fullWidth
-                      id="filled-basic"
-                      label="Address"
-                      variant="filled"
-                      value={address}
-                      onChange={(val)=>{setAddress(val.target.value)}}
-                  />
-
+                  
                   <TextField
                       margin='normal'
                       fullWidth
@@ -263,7 +223,15 @@ export default function SaveCustomer({action='add', obj = {
                       value={salary}
                       onChange={(val)=>{setSalary(val.target.value)}}
                   />
-
+                  {/* <TextField
+                      margin='normal'
+                      fullWidth
+                      id="filled-basic"
+                      label="Address"
+                      variant="filled"
+                      value={address}
+                      onChange={(val)=>{setAddress(val.target.value)}}
+                  /> */}
 
               </Box>
 

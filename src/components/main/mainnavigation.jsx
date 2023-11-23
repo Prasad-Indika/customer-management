@@ -16,10 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import AppButton from '../../common/button/button';
-import AppLogin from '../../pages/login/login';
 
 import navLinks from '../../common/navigations/routes';
 import { Route, Routes,Navigate, Link } from 'react-router-dom';
@@ -27,8 +24,8 @@ import { Route, Routes,Navigate, Link } from 'react-router-dom';
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
   }),
@@ -91,9 +88,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
-
-
 export default function MainNavigations() {
 
   function logOut(){
@@ -135,7 +129,7 @@ export default function MainNavigations() {
           <Box sx={{marginLeft:10}}>
             <AppButton clickEvent={()=>{logOut()}} clr={'#3D0C11'}  name='Logout' radius={6}/>
           </Box>
-          
+    
           
         </Toolbar>
       </AppBar>
@@ -146,9 +140,7 @@ export default function MainNavigations() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-      
-        
-
+    
         <List>
         {navLinks.map((obj, index) => (
                         <ListItem key={index} disablePadding sx={{ display: 'block' }}>
@@ -160,7 +152,6 @@ export default function MainNavigations() {
                                         px: 2.5,
                                     }}
                                 >
-
                                     <ListItemIcon
                                         sx={{
                                             minWidth: 0,
@@ -176,22 +167,16 @@ export default function MainNavigations() {
                         </ListItem>
                     ))}
         </List>
-
         <Divider />
-
-       
+  
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        
+       
           <Routes>
               <Route path={"*"} element={<Navigate to={'/customerview'}/>}/>
               {navLinks.map((val,index)=> <Route key={index} path={val.path} element={val.component} /> )}
           </Routes>
-
-
-
-
       </Box>
     </Box>
   );
