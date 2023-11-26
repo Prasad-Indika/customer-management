@@ -74,7 +74,7 @@ export default function CustomerView() {
                     contact:val.contact,
                     address:<><ViewAddress id={val.id}/></>,
                     salary:val.salary,
-                    profilePic:<><Avatar src={val.image} /></>,
+                    profilePic:<><Avatar src={"http://127.0.0.1:8000/"+val.image} /></>,
                     
                   }) 
              

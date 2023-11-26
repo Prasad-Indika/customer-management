@@ -107,6 +107,7 @@ const dummyCustomersArray = [
 export default function CustomerList() {
     
     const [customerRaws,setRaws] = useState([])
+    const [adrs,setAdrs] = useState([])
 
     function loadCustomers(){
 
@@ -115,8 +116,9 @@ export default function CustomerList() {
                 
                 const customersData = response.data.customer;
                 const array = [];
+
                 customersData.forEach((val)=>{
-  
+                
                   array.push({
                       
                       id:val.id,
@@ -130,7 +132,7 @@ export default function CustomerList() {
                           </Box>
                      </>,
                       salary:val.salary,
-                      profilePic:<><Avatar src={val.image} /></>,
+                      profilePic:<><Avatar src={"http://127.0.0.1:8000/"+val.image} /></>,
                       action:
                       <>
                           <Box sx={{display:'flex' , justifyContent:'center'}}>

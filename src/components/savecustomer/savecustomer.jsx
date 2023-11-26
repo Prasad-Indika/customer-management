@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState , useRef, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
@@ -13,24 +13,38 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import UpgradeIcon from '@mui/icons-material/Upgrade';
 import AppButton from '../../common/button/button';
+import Typography from '@mui/material/Typography';
 
 import axios from 'axios';
 import Toast from '../../common/alert/alert';
+import Avatar from '@mui/material/Avatar';
+import SelectInput from '@mui/material/Select/SelectInput';
 
 export default function SaveCustomer({action='add',loadCustomers, obj = {
           name:'',
           contact:'',
           address:'',
           salary:'',
-
+          image:''
 }}) {
+
+  useEffect(() => {
+   
+ }, []);
+
+  
 
   const [open, setOpen] = useState(false);
 
   const [name,setName] = useState(obj.name);
   const [contact,setContact] = useState(obj.contact);
-  const [address,setAddress] = useState(obj.address);
+  const [address,setAddress] = useState('');
   const [salary,setSalary] = useState(obj.salary);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const [addressArray,setAddressArray] = useState([]);
+
+  const inputRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -95,13 +109,25 @@ export default function SaveCustomer({action='add',loadCustomers, obj = {
         }
       }
 
-          const data = {
-          name:name,
-          contact:contact,
-          salary: salary
-        }
-        axios.post('http://127.0.0.1:8000/api/customer' ,data)   
-            .then(    function (response) { 
+        //   const data = {
+        //   name:name,
+        //   contact:contact,
+        //   salary: salary
+        // }
+
+        const formdata = new FormData();
+        formdata.append('name',name);
+        formdata.append('contact',contact);
+        formdata.append('salary',salary);
+        formdata.append('image',selectedImage)
+
+        addressArray.forEach((val,index)=>{formdata.append(`addresses[${index}][address]`,`${val}`)});
+
+        
+
+        axios.post('http://127.0.0.1:8000/api/customer' ,formdata)   
+            .then(    function (response) {
+                console.log(response); 
                 loadCustomers();
                 setOpen(false);
                 Toast.fire({
@@ -161,6 +187,18 @@ export default function SaveCustomer({action='add',loadCustomers, obj = {
             contact:contact,
             salary: salary
         }
+
+
+
+        // const formdata = new FormData();
+        // formdata.append('name',name);
+        // formdata.append('contact',contact);
+        // formdata.append('salary',salary);
+        // formdata.append('image',selectedImage)
+
+        // addressArray.forEach((val,index)=>{formdata.append(`addresses[${index}][address]`,`${val}`)});
+
+        
       axios.put(`http://127.0.0.1:8000/api/customer/${obj.id}` ,data)   
          .then(    function (response) { 
             
@@ -179,7 +217,7 @@ export default function SaveCustomer({action='add',loadCustomers, obj = {
     <div>
         {content}
         <Dialog
-      
+          
           open={open}
           onClose={()=>{setOpen(false);}}
           aria-labelledby="alert-dialog-title"
@@ -194,6 +232,25 @@ export default function SaveCustomer({action='add',loadCustomers, obj = {
           <DialogContent>
              
               <Box>
+
+                  <Box onClick={()=>{inputRef.current.click();}}>
+                                           
+                      {selectedImage ? 
+                          <Avatar
+                              alt="Remy Sharp"
+                              src={URL.createObjectURL(selectedImage)}
+                              sx={{ width: 100, height: 100 }}
+                          /> : 
+                          <Avatar
+                              alt="Remy Sharp"
+                              src={"http://127.0.0.1:8000/"+obj.image} 
+                              sx={{ width: 100, height: 100 }}
+                            />
+                          }
+                      <input type='file' ref={inputRef} style={{display:"none"}} onChange={(val)=>{setSelectedImage(val.target.files[0])}}></input>
+                  </Box>
+                 
+
                   <TextField
                       margin='normal'
                       fullWidth
@@ -223,16 +280,28 @@ export default function SaveCustomer({action='add',loadCustomers, obj = {
                       value={salary}
                       onChange={(val)=>{setSalary(val.target.value)}}
                   />
-                  {/* <TextField
-                      margin='normal'
-                      fullWidth
-                      id="filled-basic"
-                      label="Address"
-                      variant="filled"
-                      value={address}
-                      onChange={(val)=>{setAddress(val.target.value)}}
-                  /> */}
+                  
 
+                  <Box>
+                      <TextField
+                        margin='normal'
+                        fullWidth
+                        id="filled-basic"
+                        label="Address"
+                        variant="filled"
+                        value={address}
+                        onChange={(val)=>{setAddress(val.target.value)}}
+                    />
+                    
+                    <Button onClick={()=>{setAddressArray([...addressArray,address])}}>Add</Button>
+                    {addressArray.map((add,index)=>(
+                      <>
+                        <Typography variant="h5" gutterBottom>
+                          {add}
+                        </Typography>
+                      </>))}
+                  </Box>
+                 
               </Box>
 
           </DialogContent>

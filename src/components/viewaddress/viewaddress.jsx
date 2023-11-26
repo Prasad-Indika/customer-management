@@ -36,7 +36,7 @@ export default function ViewAddress({id}) {
   return (
     <div>
 
-         <Button variant="outlined" onClick={()=>{setOpen(true)}}>View</Button>
+         <Button sx={{marginRight:1}} variant="outlined" onClick={()=>{setOpen(true)}}>View</Button>
          <Dialog
           
           open={open}
