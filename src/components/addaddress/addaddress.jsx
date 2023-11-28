@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Toast from '../../common/alert/alert';
 
 import axios from 'axios';
+import instance from '../../services/AxiosOrder';
 
 export default function AddAddress({id,loadCus}) {
 
@@ -25,7 +26,7 @@ export default function AddAddress({id,loadCus}) {
             address : address,
         }
         console.log(id)
-        axios.post(`http://127.0.0.1:8000/api/address/${id}` , data)   
+        instance.post(`/customer/address/${id}` , data)   
             .then(    function (response) { 
                 loadCus();
                 setOpen(false);

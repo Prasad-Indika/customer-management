@@ -3,19 +3,16 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import AppButton from '../../common/button/button';
-
 import img from '../../assets/cusmng.jpg';
 import { Link } from 'react-router-dom';
 import Toast from '../../common/alert/alert';
 
 export default function AppLogin() {
     
-
     const [username,setUname] = useState('')
     const [pword,setPword] = useState('')
   
@@ -49,21 +46,17 @@ export default function AppLogin() {
   
       <div>
             <Box sx={{height:'100vh',backgroundColor:'white' , display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                
-               
-            <Card sx={{marginLeft:12,boxShadow:0}}>
-                <CardMedia
-                    component="img"
-                    alt="Sample Image"
-                    height="500"
-                    image={img}
-                />
-
-              
-            </Card>
+                     
+                <Card sx={{marginLeft:12,boxShadow:0}}>
+                    <CardMedia
+                        component="img"
+                        alt="Sample Image"
+                        height="500"
+                        image={img}
+                    />
+                </Card>
   
                 <Card sx = {{ borderRadius:5, maxWidth: 400 , maxHeight:450 , marginRight:15,backgroundColor:'rgb(189, 208, 251)',padding:4}}>
-  
                     <CardContent>
                         <Box textAlign = {'center'}>
   
@@ -80,8 +73,7 @@ export default function AppLogin() {
                                   variant = "filled"
                                   onChange={(val)=>{setUname(val.target.value)}}
                             />
-  
-                              
+                               
                             <TextField
                                   sx={{backgroundColor:'white'}}
                                   margin='normal'

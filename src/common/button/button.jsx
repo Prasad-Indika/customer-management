@@ -7,13 +7,9 @@ export default function AppButton({name='Name',clr,clickEvent,width,radius}) {
           <Button
             sx={{backgroundColor:clr,width:width,padding:1.5,borderRadius:radius}} 
             onClick={()=>{clickEvent()}}  
-            variant="contained"
-            
-            >
-
+            variant="contained" >
               {name}
- 
-          </Button>       
+           </Button>       
     </div>
   )
 }

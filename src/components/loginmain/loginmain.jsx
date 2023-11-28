@@ -5,7 +5,6 @@ import Register from '../../pages/registration/register';
 
 export default function Loginmain() {
 
-
   return (
     <div>
         <Routes>

@@ -3,17 +3,14 @@ import { useEffect } from 'react';
 import CustomerTable from '../../components/customertable/customertable';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import UpgradeIcon from '@mui/icons-material/Upgrade';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box } from '@mui/material';
-
 import axios from 'axios';
 import SaveCustomer from '../../components/savecustomer/savecustomer';
-
 import Swal from "sweetalert2"
 import ViewAddress from '../../components/viewaddress/viewaddress';
 import AddAddress from '../../components/addaddress/addaddress';
-
+import instance from '../../services/AxiosOrder';
 
 const columns = [
 
@@ -58,52 +55,6 @@ const columns = [
     
   ];
 
-
- 
-const dummyCustomersArray = [
-
-    {
-        id:1,
-        name:'Prasad',
-        contact:'0770826701',
-        address:'Katuneriya',
-        salary:20000,
-        profilePic:<><Avatar src="" /></>,
-        action:
-            <>
-                <IconButton onClick={()=>{}} aria-label="delete"> <UpgradeIcon />  </IconButton>
-                <IconButton onClick={()=>{}} aria-label="delete"> <DeleteIcon/>  </IconButton>
-            </>
-               
-    },
-    {
-        id:2,
-        name:'Kasun',
-        contact:'0770826701',
-        address:'Katuneriya',
-        salary:20000,
-        profilePic:<><Avatar src="" /></> ,
-        action:
-            <>
-                <IconButton onClick={()=>{}} aria-label="delete"> <UpgradeIcon />  </IconButton>
-                <IconButton onClick={()=>{}} aria-label="delete"> <DeleteIcon/>  </IconButton>
-            </>     
-    },
-    {
-        id:3,
-        name:'Isuru',
-        contact:'0770826701',
-        address:'Katuneriya',
-        salary:20000,
-        profilePic:<><Avatar src="" /></>,
-        action:
-            <>
-                <IconButton onClick={()=>{}} aria-label="delete"> <UpgradeIcon />  </IconButton>
-                <IconButton onClick={()=>{}} aria-label="delete"> <DeleteIcon/>  </IconButton>
-            </>      
-    }
-]
-
 export default function CustomerList() {
     
     const [customerRaws,setRaws] = useState([])
@@ -111,7 +62,7 @@ export default function CustomerList() {
 
     function loadCustomers(){
 
-      axios.get('http://127.0.0.1:8000/api/customer')
+      instance.get('/customer')
               .then(    function (response) { 
                 
                 const customersData = response.data.customer;
@@ -129,6 +80,7 @@ export default function CustomerList() {
                           <Box sx={{display:'flex' , justifyContent:'center'}}>
                               <ViewAddress id={val.id}/>
                               <AddAddress loadCus={()=>{loadCustomers();}} id={val.id}/>
+                              <ViewAddress load={()=>{loadCustomers()}} action='update' id={val.id}/>
                           </Box>
                      </>,
                       salary:val.salary,
@@ -167,7 +119,7 @@ export default function CustomerList() {
       }).then((result) => {
         if (result.isConfirmed) {
     
-          axios.delete(`http://127.0.0.1:8000/api/customer/${id}`)
+          instance.delete(`/customer/${id}`)
                 .then(    function (response) { 
                   loadCustomers();
                   Toast.fire({
@@ -185,7 +137,6 @@ export default function CustomerList() {
     useEffect(() => {
        loadCustomers()
     }, []);
-
 
   return (
     <div>

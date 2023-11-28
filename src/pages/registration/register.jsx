@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
@@ -56,7 +54,6 @@ export default function Register() {
         
     }
 
-
   return (
     <div>
         <Box sx={{height:'100vh',backgroundColor:'white' , display:'flex',justifyContent:'center',alignItems:'center'}}>
@@ -89,7 +86,6 @@ export default function Register() {
                             onChange={(val)=>{setEmail(val.target.value)}}
                         />
 
-            
                         <TextField
                             sx={{backgroundColor:'white'}}
                             margin='normal'
@@ -116,15 +112,14 @@ export default function Register() {
 
                         />
                     </Box>
-
-                   
+  
                 </CardContent>
 
                 <CardActions sx={{display:'flex',justifyContent:'center'}}>
                     <AppButton clickEvent={()=>{registerHandling()}} clr={'rgb(65,67,229)'} name='Register' width={370}/>
                 </CardActions>
                 <hr/>
-                
+       
                 <Box sx={{display:'flex', justifyContent:'end',marginTop:3}}>
                     <Typography variant="subtitle1" gutterBottom>
                         Already have an account ? <Link to={"/login"}>Login</Link>   
