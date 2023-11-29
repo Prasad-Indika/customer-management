@@ -58,7 +58,6 @@ const columns = [
 export default function CustomerList() {
     
     const [customerRaws,setRaws] = useState([])
-    const [adrs,setAdrs] = useState([])
 
     function loadCustomers(){
 
@@ -80,11 +79,11 @@ export default function CustomerList() {
                           <Box sx={{display:'flex' , justifyContent:'center'}}>
                               <ViewAddress id={val.id}/>
                               <AddAddress loadCus={()=>{loadCustomers();}} id={val.id}/>
-                              <ViewAddress load={()=>{loadCustomers()}} action='update' id={val.id}/>
+                              <ViewAddress action='update' id={val.id}/>
                           </Box>
                      </>,
                       salary:val.salary,
-                      profilePic:<><Avatar src={"http://127.0.0.1:8000/"+val.image} /></>,
+                      profilePic:<><Avatar src={"http://127.0.0.1:8000/storage/"+val.image} /></>,
                       action:
                       <>
                           <Box sx={{display:'flex' , justifyContent:'center'}}>

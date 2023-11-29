@@ -11,8 +11,6 @@ import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Toast from '../../common/alert/alert';
-
-import axios from 'axios';
 import instance from '../../services/AxiosOrder';
 
 export default function AddAddress({id,loadCus}) {
@@ -37,27 +35,23 @@ export default function AddAddress({id,loadCus}) {
             
               } )
             .catch(   function (error)  {   console.log(error);     } );
-
     }
 
   return (
     <div>
         <Button variant="outlined" onClick={()=>{setOpen(true)}}>Add</Button>
-         <Dialog
-          
-          open={open}
-          onClose={()=>{setOpen(false);}}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
+            <Dialog
+                open={open}
+                onClose={()=>{setOpen(false);}}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description" >
 
-          <DialogTitle textAlign={'center'} id="alert-dialog-title">
-                Add New Addresses
-          </DialogTitle>
+                <DialogTitle textAlign={'center'} id="alert-dialog-title">
+                    Add New Addresses
+                </DialogTitle>
 
-          <DialogContent>
-             
-              <Box>
+                <DialogContent>
+                  <Box>
 
                     <TextField
                         margin='normal'
@@ -67,17 +61,15 @@ export default function AddAddress({id,loadCus}) {
                         variant="filled"
                         value={address}
                         onChange={(val)=>{setAddress(val.target.value)}}
-                  /> 
-                 
-                  <Button onClick={()=>{AddNewAddress()}} variant="outlined">Add</Button>
-                  <Button onClick={()=>{setOpen(false)}} variant="outlined">Cancel</Button>                
-              </Box>
+                    />     
+                                  
+                  </Box>
+                </DialogContent>
 
-          </DialogContent>
-
-          <DialogActions sx={{display:'flex' , justifyContent:'center'}}>
-            
-          </DialogActions>
+                <DialogActions sx={{display:'flex' , justifyContent:'center'}}>
+                    <Button onClick={()=>{AddNewAddress()}} variant="outlined">Add</Button>
+                    <Button onClick={()=>{setOpen(false)}} variant="outlined">Cancel</Button>  
+                </DialogActions>
 
         </Dialog>
 

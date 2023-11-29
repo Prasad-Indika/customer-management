@@ -8,10 +8,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import axios from 'axios';
 import instance from '../../services/AxiosOrder';
 
-export default function ViewAddress({id , action='add',load}) {
+export default function ViewAddress({id , action='add'}) {
 
     const [open, setOpen] = useState(false);
     const [adresses,setAddress] = useState([]);
@@ -19,7 +18,7 @@ export default function ViewAddress({id , action='add',load}) {
     function getAddresses(){
       instance.get('/customer/address/'+id)
       .then(    function (response) { 
-          setAddress(response.data.addresses);        
+          setAddress(response.data.addresses);       
        } )
       .catch(   function (error)  {   console.log(error);     } );
      
@@ -41,20 +40,20 @@ export default function ViewAddress({id , action='add',load}) {
        } )
       .catch(   function (error)  {   console.log(error);     } );
       });
-      
-      
+            
       setOpen(false);
-
     }
 
-    useEffect(() => {
+    function loadAdds(){
       getAddresses();
-    }, []);
+      setOpen(true);
+    }
 
   return (
     <div>
 
-         <Button sx={{marginRight:1}} variant="outlined" onClick={()=>{setOpen(true)}}>{action==='add' ? <>View</> : <>Update</>}</Button>
+         <Button sx={{marginRight:1}} variant="outlined" onClick={()=>{loadAdds()}}>{action==='add' ? <>View</> : <>Update</>}</Button>
+        
          <Dialog
           
           open={open}

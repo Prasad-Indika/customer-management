@@ -129,8 +129,7 @@ export default function MainNavigations() {
           <Box sx={{marginLeft:10}}>
             <AppButton clickEvent={()=>{logOut()}} clr={'#3D0C11'}  name='Logout' radius={6}/>
           </Box>
-    
-          
+           
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -177,6 +176,7 @@ export default function MainNavigations() {
               <Route path={"*"} element={<Navigate to={'/customerview'}/>}/>
               {navLinks.map((val,index)=> <Route key={index} path={val.path} element={val.component} /> )}
           </Routes>
+          
       </Box>
     </Box>
   );
